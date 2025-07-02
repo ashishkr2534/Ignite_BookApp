@@ -25,5 +25,5 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): BookApi = retrofit.create(BookApi::class.java)
+    fun provideApi(retrofit: Retrofit): ApiInterface = retrofit.create(ApiInterface::class.java)
 }

@@ -8,7 +8,9 @@ import javax.inject.Inject
  * Created by Ashish Kr on 02,July,2025
  */
 
-class BookRepository @Inject constructor(private val api: BookApi) {
+class BookRepository @Inject constructor(private val api: ApiInterface) {
+
+    //get all books -- check  Api call
     suspend fun getBooks(): List<Book> {
         return try {
             val response = api.getBooks()
@@ -32,6 +34,7 @@ class BookRepository @Inject constructor(private val api: BookApi) {
 //        }
 //    }
 
+    //fetch books by genre
 suspend fun getBooksByGenre(genre: String, page: Int): List<Book> {
     return try {
         val response = api.getBooksByTopicAndMime(topic = genre.lowercase(), page = page)
@@ -43,6 +46,7 @@ suspend fun getBooksByGenre(genre: String, page: Int): List<Book> {
     }
 }
 
+    //check if search query matches with or in contains in title or author
     suspend fun searchBooksInGenre(genre: String, query: String): List<Book> {
         return try {
             val allBooks = api.getBooksByTopicAndMime(topic = genre.lowercase(), page = 1).results

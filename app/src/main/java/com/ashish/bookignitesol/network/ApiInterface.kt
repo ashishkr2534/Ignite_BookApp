@@ -8,19 +8,14 @@ import retrofit2.http.Query
  * Created by Ashish Kr on 02,July,2025
  */
 
-interface BookApi {
+interface ApiInterface {
+
     @GET("books/")
     suspend fun getBooks(): BookResponse
 
-
-
-
     @GET("books/")
-    suspend fun getBooksByTopicAndMime(
-    @Query("topic") topic: String,
-    @Query("mime_type") mimeType: String = "image/",
-    @Query("page") page: Int
-    ): BookResponse
+    suspend fun getBooksByTopicAndMime(@Query("topic") topic: String, @Query("mime_type") mimeType: String = "image/",
+    @Query("page") page: Int): BookResponse
 
 
 }

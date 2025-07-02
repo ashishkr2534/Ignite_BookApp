@@ -113,7 +113,7 @@ fun BookList(
         viewModel.loadBooksByGenre(genre)
     }
 
-    // Infinite scroll for genre mode only
+    // Infinite scroll for genre list
     LaunchedEffect(gridState) {
         snapshotFlow { gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
             .collect { lastVisibleIndex ->
@@ -221,49 +221,6 @@ fun BookList(
 }
 
 
-//@Composable
-//fun BookCard(
-//    book: Book,
-//    modifier: Modifier = Modifier
-//) {
-//    Column(
-//        modifier = modifier
-//            .width(140.dp)
-//            .padding(8.dp)
-//    ) {
-//        AsyncImage(
-//            model = book.imageUrl,
-//            contentDescription = book.title,
-//            modifier = Modifier.padding()
-//                .height(150.dp)
-////                .aspectRatio(0.8f) // book cover ratio
-//                .clip(RoundedCornerShape(8.dp)
-//                    ),
-//                    contentScale = ContentScale.Crop,
-//
-//        )
-//
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        Text(
-//            text = book.title.uppercase(),
-//            style = MaterialTheme.typography.bodyMedium.copy(
-//                fontWeight = FontWeight.SemiBold
-//            ),
-//            maxLines = 2,
-//            overflow = TextOverflow.Ellipsis
-//        )
-//
-//        Text(
-//            text = book.authors.firstOrNull()?.name ?: "Unknown",
-//            style = MaterialTheme.typography.bodySmall.copy(
-//                color = Color.Gray
-//            ),
-//            maxLines = 1,
-//            overflow = TextOverflow.Ellipsis
-//        )
-//    }
-//}
 
 @Preview
 @Composable
