@@ -90,90 +90,216 @@ import com.ashish.ignitebookapp.viewmodel.BooksViewModel
 //    LaunchedEffect(genre) {
 //        viewModel.loadBooks(genre)
 //    }
-@Composable
-fun BookList(navController: NavHostController, genre: String = "Fiction",
-             viewModel: BooksViewModel  = hiltViewModel()){
+//@Composable
+//fun BookList(navController: NavHostController, genre: String = "Fiction",
+//             viewModel: BooksViewModel  = hiltViewModel()){
+//
+//    var selectedGenre by remember { mutableStateOf(genre) }
+//    var searchQuery by remember { mutableStateOf("") }
+//    val keyboardController = LocalSoftwareKeyboardController.current
+//
+//
+//    val books by viewModel.books.collectAsState()
+//    val isLoading by viewModel.isLoading.collectAsState()
+//
+////    val listState: LazyListState = rememberLazyListState()
+//    val gridState = rememberLazyGridState()
+//
+//    LaunchedEffect(Unit) {
+//        viewModel.loadBooksByGenre(genre)
+//
+//    }
+//
+//    // Detect scroll to end
+//    LaunchedEffect(gridState) {
+//        snapshotFlow { gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
+//            .collect { lastVisibleIndex ->
+//                if (lastVisibleIndex == books.size - 1 && !isLoading) {
+//                    viewModel.loadBooksByGenre(genre, loadNextPage = true)
+//                }
+//            }
+//    }
+//
+//    Scaffold(topBar ={
+//        CenterAlignedTopAppBar(
+//            title = {
+//                Row {
+//                    Text("${selectedGenre.toString()}".toString(),  fontSize = 22.sp,
+//                        color = ThemeColorPrimary, fontWeight = FontWeight.Bold)
+//                }
+//
+//            },
+//            navigationIcon = {
+//                IconButton(onClick = { navController.popBackStack() }) {
+//                    Icon(Icons.Default.ArrowBack, contentDescription = "Back",
+//                        tint = ThemeColorPrimary,
+//                        modifier = Modifier.size(35.dp))
+//                }
+//            }
+//        )
+//    } ) {
+//        Column(Modifier.padding(start = 10.dp, end = 10.dp, top = 22.dp)) {
+//
+//            Spacer(modifier = Modifier.height(60.dp))
+////            Text(books.size.toString())
+//            TextField(
+//                value = searchQuery,
+//                onValueChange = { searchQuery = it },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 16.dp),
+//                placeholder = { Text("Search books...") },
+//                leadingIcon = {
+//                    Icon(
+//                        imageVector = Icons.Default.Search,
+//                        contentDescription = "Search Icon"
+//                    )
+//                },
+//                trailingIcon = {
+//                    if (searchQuery.isNotEmpty()) {
+//                        IconButton(onClick = { searchQuery = "" }) {
+//                            Icon(
+//                                imageVector = Icons.Default.Clear,
+//                                contentDescription = "Clear Search"
+//                            )
+//                        }
+//                    }
+//                },
+//                singleLine = true,
+//                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+//                keyboardActions = KeyboardActions(onSearch = {
+//                    // Perform search action
+//                    keyboardController?.hide()
+//                }),
+//                colors = TextFieldDefaults.colors(focusedIndicatorColor = Color.Transparent,
+//                    unfocusedIndicatorColor = Color.Transparent)
+//            )
+//
+//            if (isLoading) {
+//                CircularProgressIndicator(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(16.dp)
+//                        .wrapContentWidth(Alignment.CenterHorizontally)
+//                )
+//            } else {
+////                LazyColumn(state = listState) {
+////                    items(books) { book ->
+////                        Text(text = book.title, fontWeight = FontWeight.Bold)
+////                        // You can build BookCard composable here for nicer UI
+////                        Spacer(modifier = Modifier.height(10.dp))
+////                    }
+////                }
+//                LazyVerticalGrid(state = gridState,
+////                    columns = GridCells.Adaptive(minSize = 140.dp),
+//                    columns = GridCells.Fixed(3),
+//                    contentPadding = PaddingValues(8.dp),
+//                    modifier = Modifier.fillMaxSize()
+//                ) {
+//                    items(books) { book ->
+//                        BookCard(book = book)
+//                    }
+//                }
+//            }
+//
+//
+//        }
+//
+//    }
+//}
 
+@Composable
+fun BookList(
+    navController: NavHostController,
+    genre: String = "Fiction",
+    viewModel: BooksViewModel = hiltViewModel()
+) {
     var selectedGenre by remember { mutableStateOf(genre) }
     var searchQuery by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-
     val books by viewModel.books.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-
-//    val listState: LazyListState = rememberLazyListState()
     val gridState = rememberLazyGridState()
 
     LaunchedEffect(Unit) {
         viewModel.loadBooksByGenre(genre)
-
     }
 
-    // Detect scroll to end
+    // Infinite scroll for genre mode only
     LaunchedEffect(gridState) {
         snapshotFlow { gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
             .collect { lastVisibleIndex ->
-                if (lastVisibleIndex == books.size - 1 && !isLoading) {
+                if (lastVisibleIndex == books.size - 1 && !isLoading && searchQuery.isBlank()) {
                     viewModel.loadBooksByGenre(genre, loadNextPage = true)
                 }
             }
     }
 
-    Scaffold(topBar ={
+    Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title = {
-                Row {
-                    Text("${selectedGenre.toString()}".toString(),  fontSize = 22.sp,
-                        color = ThemeColorPrimary, fontWeight = FontWeight.Bold)
-                }
-
+                Text(
+                    "${selectedGenre.uppercase()}",
+                    fontSize = 22.sp,
+                    color = ThemeColorPrimary,
+                    fontWeight = FontWeight.Bold
+                )
             },
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back",
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Back",
                         tint = ThemeColorPrimary,
-                        modifier = Modifier.size(35.dp))
+                        modifier = Modifier.size(35.dp)
+                    )
                 }
             }
         )
-    } ) {
-        Column(Modifier.padding(start = 10.dp, end = 10.dp, top = 22.dp)) {
+    }) { paddingValues ->
+        Column(modifier = Modifier
+            .padding(paddingValues)
+            .padding(horizontal = 10.dp, vertical = 16.dp)) {
 
-            Spacer(modifier = Modifier.height(60.dp))
-//            Text(books.size.toString())
             TextField(
                 value = searchQuery,
-                onValueChange = { searchQuery = it },
+                onValueChange = {
+                    searchQuery = it
+                    if (searchQuery.isBlank()) {
+                        viewModel.clearSearchAndReloadGenre(genre)
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 6.dp),
                 placeholder = { Text("Search books...") },
                 leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon"
-                    )
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
                 },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { searchQuery = "" }) {
-                            Icon(
-                                imageVector = Icons.Default.Clear,
-                                contentDescription = "Clear Search"
-                            )
+                        IconButton(onClick = {
+                            searchQuery = ""
+                            viewModel.clearSearchAndReloadGenre(genre)
+                        }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Clear Search")
                         }
                     }
                 },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(onSearch = {
-                    // Perform search action
                     keyboardController?.hide()
+                    viewModel.searchBooksAcrossAllGenres(searchQuery)
                 }),
-                colors = TextFieldDefaults.colors(focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent)
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                )
             )
+
+            Spacer(modifier = Modifier.height(12.dp))
 
             if (isLoading) {
                 CircularProgressIndicator(
@@ -183,15 +309,8 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
                         .wrapContentWidth(Alignment.CenterHorizontally)
                 )
             } else {
-//                LazyColumn(state = listState) {
-//                    items(books) { book ->
-//                        Text(text = book.title, fontWeight = FontWeight.Bold)
-//                        // You can build BookCard composable here for nicer UI
-//                        Spacer(modifier = Modifier.height(10.dp))
-//                    }
-//                }
-                LazyVerticalGrid(state = gridState,
-//                    columns = GridCells.Adaptive(minSize = 140.dp),
+                LazyVerticalGrid(
+                    state = gridState,
                     columns = GridCells.Fixed(3),
                     contentPadding = PaddingValues(8.dp),
                     modifier = Modifier.fillMaxSize()
@@ -201,19 +320,10 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
                     }
                 }
             }
-
-
         }
-
     }
 }
 
-@Preview
-@Composable
-fun PreviewBookListScreen(){
-    BookList(rememberNavController())
-
-}
 
 @Composable
 fun BookCard(
@@ -257,4 +367,11 @@ fun BookCard(
             overflow = TextOverflow.Ellipsis
         )
     }
+}
+
+@Preview
+@Composable
+fun PreviewBookListScreen(){
+    BookList(rememberNavController())
+
 }

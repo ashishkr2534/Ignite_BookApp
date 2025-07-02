@@ -1,5 +1,6 @@
 package com.ashish.ignitebookapp.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -70,6 +71,8 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
 
     private var currentGenre = ""
 
+    private var isSearchMode = false
+
         fun loadBooks(genre: String) {
         viewModelScope.launch {
             _isLoading.value = true
@@ -117,4 +120,26 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
             _isLoading.value = false
         }
     }
+
+    fun searchBooksAcrossAllGenres(query: String) {
+        if (query.isBlank()) return
+
+        viewModelScope.launch {
+            _isLoading.emit(true)
+            isSearchMode = true
+            val encodedQuery = Uri.encode(query.trim())
+            val result = repo.getBooksSearch(encodedQuery) // <- Search across ALL categories
+            _books.emit(result)
+            _isLoading.emit(false)
+        }
+    }
+
+    fun clearSearchAndReloadGenre(genre: String) {
+        viewModelScope.launch {
+            isSearchMode = false
+            _books.emit(emptyList())
+            loadBooksByGenre(genre)
+        }
+    }
+
 }
