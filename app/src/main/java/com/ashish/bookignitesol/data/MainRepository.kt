@@ -7,18 +7,6 @@ import javax.inject.Inject
 /**
  * Created by Ashish Kr on 02,July,2025
  */
-//class BookRepository @Inject constructor(private val api: BookApi) {
-//    suspend fun getBooksByGenre(genre: String): List<Book> {
-//        return try {
-////            val response = api.getBooks(genre = genre, mimeType = "image/")
-//            val response = api.getBooks()
-//            response.results
-//            Log.d("Result Books", response.results)
-//        } catch (e: Exception) {
-//            emptyList()
-//        }
-//    }
-//}
 
 class BookRepository @Inject constructor(private val api: BookApi) {
     suspend fun getBooks(): List<Book> {
@@ -43,16 +31,7 @@ class BookRepository @Inject constructor(private val api: BookApi) {
             emptyList()
         }
     }
-//    suspend fun getBooksByGenre(genre: String): List<Book> {
-//        return try {
-//            val response = api.getBooksByTopicAndMime(topic = genre.lowercase())
-//            Log.d("ResultBooks", response.results.toString())
-//            response.results
-//        } catch (e: Exception) {
-//            Log.e("BookRepository", "Error fetching books by genre", e)
-//            emptyList()
-//        }
-//    }
+
 suspend fun getBooksByGenre(genre: String, page: Int): List<Book> {
     return try {
         val response = api.getBooksByTopicAndMime(topic = genre.lowercase(), page = page)

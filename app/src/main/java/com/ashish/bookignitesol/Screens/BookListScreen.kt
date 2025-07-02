@@ -38,56 +38,56 @@ import javax.inject.Inject
  */
 
 
-@Composable
-fun BooksListScreen(genre: String, viewModel: BooksViewModel = hiltViewModel()) {
-    val books by viewModel.books.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-
-    LaunchedEffect(genre) {
-//        viewModel.loadBooks(genre)
-        viewModel.loadBooksSearch(genre)
-//        loadBooksSearch.
-    }
-
-    val context = LocalContext.current
-
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(8.dp)) {
-        items(books) { book ->
-
-//            Card {
-//                Column {
-//                    Text(book.authors.toString())
-//                    Text(book.title.toString())
+//@Composable
+//fun BooksListScreen(genre: String, viewModel: BooksViewModel = hiltViewModel()) {
+//    val books by viewModel.books.collectAsState()
+//    val isLoading by viewModel.isLoading.collectAsState()
+//
+//    LaunchedEffect(genre) {
+////        viewModel.loadBooks(genre)
+////        viewModel.loadBooksSearch(genre)
+////        loadBooksSearch.
+//    }
+//
+//    val context = LocalContext.current
+//
+//    LazyColumn(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+//        items(books) { book ->
+//
+////            Card {
+////                Column {
+////                    Text(book.authors.toString())
+////                    Text(book.title.toString())
+////                }
+////            }
+//            BookItem(book) {
+//                val url = getBookUrl(book.formats)
+//                if (url != null) {
+//                    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+//                    startActivity(context, intent, null)
+//                } else {
+//                    Toast.makeText(
+//                        context,
+//                        "No viewable version available",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
 //                }
 //            }
-            BookItem(book) {
-                val url = getBookUrl(book.formats)
-                if (url != null) {
-                    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-                    startActivity(context, intent, null)
-                } else {
-                    Toast.makeText(
-                        context,
-                        "No viewable version available",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-        item {
-            if (isLoading) {
-                CircularProgressIndicator()
-            }
-        }
-    }
-}
+//        }
+//        item {
+//            if (isLoading) {
+//                CircularProgressIndicator()
+//            }
+//        }
+//    }
+//}
 
-@Composable
-fun BookItem(book: Book, onClick: () -> Unit) {
-    Card(modifier = Modifier.fillMaxWidth().padding(8.dp).clickable { onClick() }) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(book.title, style = MaterialTheme.typography.titleMedium)
-            Text(book.authors.joinToString { it.name }, style = MaterialTheme.typography.bodySmall)
-        }
-    }
-}
+//@Composable
+//fun BookItem(book: Book, onClick: () -> Unit) {
+//    Card(modifier = Modifier.fillMaxWidth().padding(8.dp).clickable { onClick() }) {
+//        Column(modifier = Modifier.padding(16.dp)) {
+//            Text(book.title, style = MaterialTheme.typography.titleMedium)
+//            Text(book.authors.joinToString { it.name }, style = MaterialTheme.typography.bodySmall)
+//        }
+//    }
+//}

@@ -11,18 +11,6 @@ import javax.inject.Singleton
 /**
  * Created by Ashish Kr on 02,July,2025
  */
-//@Module
-//@InstallIn(SingletonComponent::class)
-//object RetrofitModule {
-//    @Provides
-//    fun provideRetrofit(): Retrofit = Retrofit.Builder()
-//        .baseUrl("http://skunkworks.ignitesol.com:8000/")
-//        .addConverterFactory(GsonConverterFactory.create())
-//        .build()
-//
-//    @Provides
-//    fun provideApi(retrofit: Retrofit): BookApi = retrofit.create(BookApi::class.java)
-//}
 
 @Module
 @InstallIn(SingletonComponent::class)
