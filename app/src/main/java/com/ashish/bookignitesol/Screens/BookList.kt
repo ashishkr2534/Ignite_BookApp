@@ -85,6 +85,8 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
 import com.ashish.bookignitesol.ui.theme.ThemeColorSecondary
+import com.ashish.bookignitesol.ui.theme.montserrat_bold
+import com.ashish.bookignitesol.ui.theme.montserrat_regular
 import com.ashish.ignitebookapp.models.Book
 import com.ashish.ignitebookapp.viewmodel.BooksViewModel
 
@@ -131,7 +133,8 @@ fun BookList(
                     text = selectedGenre.uppercase(),
                     fontSize = 22.sp,
                     color = ThemeColorPrimary,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = montserrat_bold
                 )
             },
             navigationIcon = {
@@ -164,7 +167,7 @@ fun BookList(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 6.dp),
-                placeholder = { Text("Search") },
+                placeholder = { Text("Search", fontFamily = montserrat_regular) },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
                 },
@@ -280,14 +283,16 @@ fun BookCard(book: Book, modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.SemiBold
             ),
             maxLines = 2,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            fontFamily = montserrat_bold
         )
 
         Text(
             text = book.authors.firstOrNull()?.name ?: "Unknown",
             style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            fontFamily = montserrat_regular
         )
     }
 }

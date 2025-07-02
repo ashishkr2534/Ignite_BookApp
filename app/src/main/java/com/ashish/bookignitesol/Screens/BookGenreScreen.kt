@@ -47,6 +47,8 @@ import com.ashish.bookignitesol.Navigation.Screen
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
 import com.ashish.bookignitesol.R
 import com.ashish.bookignitesol.ui.theme.ThemeColorSecondary
+import com.ashish.bookignitesol.ui.theme.montserrat_bold
+import com.ashish.bookignitesol.ui.theme.montserrat_regular
 
 /**
  * Created by Ashish Kr on 02,July,2025
@@ -97,6 +99,7 @@ fun BookGenreScreen(navController: NavHostController) {
                         fontSize = 48.sp,
                         fontWeight = FontWeight.Bold,
                         lineHeight = 45.sp,
+                        fontFamily = montserrat_bold
 
                     )
 
@@ -105,7 +108,8 @@ fun BookGenreScreen(navController: NavHostController) {
                     Text(
                         "A social cataloging website that allows you to freely search its database of books, annotations and reviews.",
                         color = Color.Black, // assuming dark image
-                        fontSize = 22.sp
+                        fontSize = 22.sp,
+                        fontFamily = montserrat_regular
                     )
                 }
             }
@@ -127,50 +131,6 @@ data class Genre(
     @DrawableRes val iconRes: Int
 )
 
-//@Composable
-//fun GenreCard(genre: Genre, onClick: () -> Unit) {
-//    Card(
-//        modifier = Modifier
-//            .padding(2.dp)
-//            .height(50.dp)
-//            .fillMaxWidth()
-//            .clickable { onClick() }
-//            .shadow(5.dp, RectangleShape),
-//        colors = CardDefaults.cardColors(containerColor = White)
-//    ) {
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(8.dp),
-//            horizontalArrangement = Arrangement.SpaceBetween,
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            Row(
-//                Modifier.fillMaxWidth(0.8f),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Image(
-//                    painter = painterResource(genre.iconRes),
-//                    contentDescription = "${genre.name} icon",
-//                    modifier = Modifier.size(35.dp)
-//                )
-//                Text(
-//                    text = genre.name,
-//                    modifier = Modifier.padding(start = 20.dp),
-//                    fontWeight = FontWeight.Bold,
-//                    color = Black
-//                )
-//            }
-//
-//            Icon(
-//                imageVector = Icons.Default.ArrowForward,
-//                contentDescription = "arrow",
-//                tint = ThemeColorPrimary,
-//                modifier = Modifier.size(35.dp)
-//            )
-//        }
-//    }
-//}
 
 @Composable
 fun GenreCard(genre: Genre, onClick: () -> Unit) {
@@ -203,7 +163,8 @@ fun GenreCard(genre: Genre, onClick: () -> Unit) {
                     text = genre.name,
                     modifier = Modifier.padding(start = 20.dp),
                     fontWeight = FontWeight.Bold,
-                    color = Black
+                    color = Black,
+                    fontFamily = montserrat_bold
                 )
             }
 
