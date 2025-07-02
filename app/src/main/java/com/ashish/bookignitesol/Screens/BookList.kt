@@ -215,7 +215,11 @@ fun BookList(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
     var selectedGenre by remember { mutableStateOf(genre) }
-    var searchQuery by remember { mutableStateOf("") }
+//    var searchQuery by remember { mutableStateOf("") }
+
+    //search query replaced by viewmodel to sarch frequently for text value change
+    val searchQuery by viewModel.searchQuery.collectAsState()
+
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val books by viewModel.books.collectAsState()
@@ -264,12 +268,13 @@ fun BookList(
 
             TextField(
                 value = searchQuery,
-                onValueChange = {
-                    searchQuery = it
-                    if (searchQuery.isBlank()) {
-                        viewModel.clearSearchAndReloadGenre(genre)
-                    }
-                },
+//                onValueChange = {
+//                    searchQuery = it
+//                    if (searchQuery.isBlank()) {
+//                        viewModel.clearSearchAndReloadGenre(genre)
+//                    }
+//                },
+                onValueChange = { viewModel.onSearchQueryChanged(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 6.dp),
@@ -280,7 +285,7 @@ fun BookList(
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
                         IconButton(onClick = {
-                            searchQuery = ""
+//                            searchQuery = ""
                             viewModel.clearSearchAndReloadGenre(genre)
                         }) {
                             Icon(Icons.Default.Clear, contentDescription = "Clear Search")

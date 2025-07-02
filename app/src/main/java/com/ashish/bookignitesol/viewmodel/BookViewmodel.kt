@@ -7,8 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.ashish.ignitebookapp.data.BookRepository
 import com.ashish.ignitebookapp.models.Book
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -57,6 +61,7 @@ import javax.inject.Inject
 //    }
 //}
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class BooksViewModel @Inject constructor(private val repo: BookRepository) : ViewModel() {
 
@@ -73,7 +78,39 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
 
     private var isSearchMode = false
 
-        fun loadBooks(genre: String) {
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
+
+    private val _isSearching = MutableStateFlow(false)
+    val isSearching: StateFlow<Boolean> = _isSearching
+
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
+    }
+
+    init {
+        viewModelScope.launch {
+            _searchQuery
+                .debounce(400) // 400ms delay to debounce
+                .distinctUntilChanged()
+                .collectLatest { query ->
+                    if (query.isNotBlank()) {
+                        _isSearching.emit(true)
+                        _isLoading.emit(true)
+                        val encoded = Uri.encode(query)
+                        val result = repo.getBooksSearch(encoded)
+                        _books.emit(result)
+                        _isLoading.emit(false)
+                    } else {
+                        // Reset list when query is cleared
+                        clearSearchAndReloadGenre(currentGenre)
+                    }
+                }
+        }
+    }
+
+
+    fun loadBooks(genre: String) {
         viewModelScope.launch {
             _isLoading.value = true
 //            val result = repo.getBooksByGenre(genre)
