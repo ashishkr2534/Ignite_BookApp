@@ -3,19 +3,24 @@ package com.ashish.bookignitesol.Screens
 import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -23,7 +28,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ashish.bookignitesol.Navigation.Screen
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
 import com.ashish.bookignitesol.R
+import com.ashish.bookignitesol.ui.theme.ThemeColorSecondary
 
 /**
  * Created by Ashish Kr on 02,July,2025
@@ -55,25 +67,49 @@ fun BookGenreScreen(navController: NavHostController) {
     )
 
     Scaffold {
-        Column(Modifier.padding(20.dp)) {
+        Column(Modifier.background(ThemeColorSecondary)
+            .padding(20.dp)
+            .fillMaxSize()) {
 
             Spacer(modifier = Modifier.height(50.dp))
 
-            Text(
-                "Gutenberg \nProject",
-                color = ThemeColorPrimary,
-                fontSize = 48.sp,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 45.sp
-            )
+            Box(
+                modifier = Modifier.background(Transparent)
+                    .fillMaxWidth()
+                    .height(240.dp)
+            ) {
+//                Image(
+//                    painter = painterResource(R.drawable.pattern),
+//                    contentDescription = "Background",
+//                    modifier = Modifier.fillMaxSize(),
+//                    contentScale = ContentScale.Crop
+//                )
 
-            Spacer(modifier = Modifier.height(10.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        "Gutenberg \nProject",
+                        color = ThemeColorPrimary,
+                        fontSize = 48.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 45.sp,
 
-            Text(
-                "A social cataloging website that allows you to freely search its database of books, annotations and reviews.",
-                color = Color.Black,
-                fontSize = 16.sp
-            )
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        "A social cataloging website that allows you to freely search its database of books, annotations and reviews.",
+                        color = Color.Black, // assuming dark image
+                        fontSize = 22.sp
+                    )
+                }
+            }
+
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -91,18 +127,65 @@ data class Genre(
     @DrawableRes val iconRes: Int
 )
 
+//@Composable
+//fun GenreCard(genre: Genre, onClick: () -> Unit) {
+//    Card(
+//        modifier = Modifier
+//            .padding(2.dp)
+//            .height(50.dp)
+//            .fillMaxWidth()
+//            .clickable { onClick() }
+//            .shadow(5.dp, RectangleShape),
+//        colors = CardDefaults.cardColors(containerColor = White)
+//    ) {
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(8.dp),
+//            horizontalArrangement = Arrangement.SpaceBetween,
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            Row(
+//                Modifier.fillMaxWidth(0.8f),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Image(
+//                    painter = painterResource(genre.iconRes),
+//                    contentDescription = "${genre.name} icon",
+//                    modifier = Modifier.size(35.dp)
+//                )
+//                Text(
+//                    text = genre.name,
+//                    modifier = Modifier.padding(start = 20.dp),
+//                    fontWeight = FontWeight.Bold,
+//                    color = Black
+//                )
+//            }
+//
+//            Icon(
+//                imageVector = Icons.Default.ArrowForward,
+//                contentDescription = "arrow",
+//                tint = ThemeColorPrimary,
+//                modifier = Modifier.size(35.dp)
+//            )
+//        }
+//    }
+//}
+
 @Composable
 fun GenreCard(genre: Genre, onClick: () -> Unit) {
-    Card(
+    Box(
         modifier = Modifier
             .padding(2.dp)
             .height(50.dp)
             .fillMaxWidth()
+            .shadow(5.dp, shape = RoundedCornerShape(5.dp))
+            .background(color = White, shape = RoundedCornerShape(5.dp))
             .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -119,7 +202,8 @@ fun GenreCard(genre: Genre, onClick: () -> Unit) {
                 Text(
                     text = genre.name,
                     modifier = Modifier.padding(start = 20.dp),
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Black
                 )
             }
 
@@ -132,7 +216,6 @@ fun GenreCard(genre: Genre, onClick: () -> Unit) {
         }
     }
 }
-
 
 
 @Preview

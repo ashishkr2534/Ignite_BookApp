@@ -8,6 +8,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,6 +53,8 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -64,6 +67,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -80,6 +84,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
+import com.ashish.bookignitesol.ui.theme.ThemeColorSecondary
 import com.ashish.ignitebookapp.models.Book
 import com.ashish.ignitebookapp.viewmodel.BooksViewModel
 
@@ -118,11 +123,12 @@ fun BookList(
             }
     }
 
-    Scaffold(topBar = {
-        CenterAlignedTopAppBar(
+    Scaffold(containerColor = White,topBar = {
+
+        TopAppBar(
             title = {
                 Text(
-                    "${selectedGenre.uppercase()}",
+                    text = selectedGenre.uppercase(),
                     fontSize = 22.sp,
                     color = ThemeColorPrimary,
                     fontWeight = FontWeight.Bold
@@ -131,14 +137,16 @@ fun BookList(
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
-                        Icons.Default.ArrowBack,
+                        imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back",
                         tint = ThemeColorPrimary,
                         modifier = Modifier.size(35.dp)
                     )
                 }
-            }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = White)
         )
+
     }) { paddingValues ->
         Column(modifier = Modifier
             .padding(paddingValues)
@@ -156,7 +164,7 @@ fun BookList(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 6.dp),
-                placeholder = { Text("Search books...") },
+                placeholder = { Text("Search") },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
                 },
@@ -178,8 +186,12 @@ fun BookList(
                 }),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                )
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedContainerColor = ThemeColorSecondary,
+                    unfocusedContainerColor = ThemeColorSecondary,
+                    disabledContainerColor = ThemeColorSecondary
+                ),
+                shape = RoundedCornerShape(5.dp)
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -189,14 +201,15 @@ fun BookList(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
-                        .wrapContentWidth(Alignment.CenterHorizontally)
+                        .wrapContentWidth(Alignment.CenterHorizontally),
+                    color = ThemeColorPrimary
                 )
             } else {
                 LazyVerticalGrid(
                     state = gridState,
                     columns = GridCells.Fixed(3),
                     contentPadding = PaddingValues(8.dp),
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize().background(ThemeColorSecondary)
                 ) {
                     items(books) { book ->
                         BookCard(book = book)
