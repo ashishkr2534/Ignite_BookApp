@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -23,6 +25,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,6 +37,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,22 +52,39 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.packInts
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
+import com.ashish.ignitebookapp.viewmodel.BooksViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@Composable
+//fun BookList(navController: NavHostController, genre: String = "Fiction") {
+//    val viewModel: BooksViewModel = hiltViewModel()
+//    val books by viewModel.books.collectAsState()
+//    val isLoading by viewModel.isLoading.collectAsState()
+//
+//    // Trigger loading once
+//    LaunchedEffect(genre) {
+//        viewModel.loadBooks(genre)
+//    }
 @Composable
-fun BookList(navController: NavHostController, genre: String = "Fiction"){
+fun BookList(navController: NavHostController, genre: String = "Fiction",
+             viewModel: BooksViewModel  = hiltViewModel()){
 
     var selectedGenre by remember { mutableStateOf(genre) }
     var searchQuery by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
 
 
-    LaunchedEffect(Unit) {
+    val books by viewModel.books.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.loadBooksByGenre(genre)
 
     }
 
@@ -117,7 +138,21 @@ fun BookList(navController: NavHostController, genre: String = "Fiction"){
                     // Perform search action
                     keyboardController?.hide()
                 }),
-                colors = TextFieldDefaults.colors(focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent)            )
+                colors = TextFieldDefaults.colors(focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent)
+            )
+
+            if (isLoading) {
+                CircularProgressIndicator()
+            } else {
+                LazyColumn {
+                    items(books) { book ->
+                        Text(text = book.title, fontWeight = FontWeight.Bold)
+                        // You can build BookCard composable here for nicer UI
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+            }
 
 
         }

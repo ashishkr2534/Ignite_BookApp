@@ -24,6 +24,12 @@ interface BookApi {
         @Query("topic") genre: String,
         @Query("mime_type") mimeType: String = "image/"
     ): BookResponse
+
+    @GET("books/")
+    suspend fun getBooksByTopicAndMime(
+        @Query("topic") topic: String,
+        @Query("mime_type") mimeType: String = "image/"
+    ): BookResponse
 }
 
 //interface BookApi {
