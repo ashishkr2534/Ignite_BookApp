@@ -35,4 +35,15 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
             _isLoading.value = false
         }
     }
+
+    fun loadBooksSearch(genre: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val result = repo.getBooksSearch(genre)
+//            val result = repo.getBooks()
+            Log.d("BooksViewModel Search", "Loaded ${result.toString()} books")
+            _books.value = result
+            _isLoading.value = false
+        }
+    }
 }

@@ -31,4 +31,16 @@ class BookRepository @Inject constructor(private val api: BookApi) {
             emptyList()
         }
     }
+
+    suspend fun getBooksSearch(genre: String): List<Book> {
+        return try {
+//            val response = api.getBooks()
+            val response = api.getBooksSearch(genre = genre, mimeType = "image/")
+            Log.d("ResultBooks Search", response.results.toString())
+            response.results
+        } catch (e: Exception) {
+            Log.e("BookRepository", "Error fetching books", e)
+            emptyList()
+        }
+    }
 }

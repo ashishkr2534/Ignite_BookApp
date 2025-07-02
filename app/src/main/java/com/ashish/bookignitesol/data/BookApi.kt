@@ -18,6 +18,12 @@ import retrofit2.http.Query
 interface BookApi {
     @GET("books/")
     suspend fun getBooks(): BookResponse
+
+        @GET("books")
+    suspend fun getBooksSearch(
+        @Query("topic") genre: String,
+        @Query("mime_type") mimeType: String = "image/"
+    ): BookResponse
 }
 
 //interface BookApi {

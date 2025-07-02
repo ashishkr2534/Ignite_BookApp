@@ -44,7 +44,9 @@ fun BooksListScreen(genre: String, viewModel: BooksViewModel = hiltViewModel()) 
     val isLoading by viewModel.isLoading.collectAsState()
 
     LaunchedEffect(genre) {
-        viewModel.loadBooks(genre)
+//        viewModel.loadBooks(genre)
+        viewModel.loadBooksSearch(genre)
+//        loadBooksSearch.
     }
 
     val context = LocalContext.current
@@ -52,25 +54,25 @@ fun BooksListScreen(genre: String, viewModel: BooksViewModel = hiltViewModel()) 
     LazyColumn(modifier = Modifier.fillMaxSize().padding(8.dp)) {
         items(books) { book ->
 
-            Card {
-                Column {
-                    Text(book.authors.toString())
-                    Text(book.title.toString())
-                }
-            }
-//            BookResponse(book) {
-//                val url = getBookUrl(book.formats)
-//                if (url != null) {
-//                    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-//                    startActivity(context, intent, null)
-//                } else {
-//                    Toast.makeText(
-//                        context,
-//                        "No viewable version available",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+//            Card {
+//                Column {
+//                    Text(book.authors.toString())
+//                    Text(book.title.toString())
 //                }
 //            }
+            BookItem(book) {
+                val url = getBookUrl(book.formats)
+                if (url != null) {
+                    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+                    startActivity(context, intent, null)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "No viewable version available",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
         item {
             if (isLoading) {
