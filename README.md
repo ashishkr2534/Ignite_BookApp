@@ -30,6 +30,8 @@ An Android app built using **Jetpack Compose** that allows users to browse and o
 - Displays title, author
 - Supports infinite scroll for book list
 - Search feature implemented by title or author - as soon as user starts tryping
+- Custom Logo
+- Custom Font
 
 ### 🔍 Book Details
 - Tapping a book tries to open the most **viewable format** link in the browser.
