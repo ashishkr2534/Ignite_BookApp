@@ -7,16 +7,27 @@ package com.ashish.bookignitesol.Screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -47,10 +58,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,7 +73,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
+import com.ashish.ignitebookapp.models.Book
 import com.ashish.ignitebookapp.viewmodel.BooksViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,7 +102,8 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
     val books by viewModel.books.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
-    val listState = rememberLazyListState()
+//    val listState: LazyListState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
 
     LaunchedEffect(Unit) {
         viewModel.loadBooksByGenre(genre)
@@ -94,8 +111,8 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
     }
 
     // Detect scroll to end
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
+    LaunchedEffect(gridState) {
+        snapshotFlow { gridState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
             .collect { lastVisibleIndex ->
                 if (lastVisibleIndex == books.size - 1 && !isLoading) {
                     viewModel.loadBooksByGenre(genre, loadNextPage = true)
@@ -121,9 +138,10 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
             }
         )
     } ) {
-        Column(Modifier.padding(20.dp)) {
+        Column(Modifier.padding(start = 10.dp, end = 10.dp, top = 22.dp)) {
 
             Spacer(modifier = Modifier.height(60.dp))
+//            Text(books.size.toString())
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
@@ -165,11 +183,21 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
                         .wrapContentWidth(Alignment.CenterHorizontally)
                 )
             } else {
-                LazyColumn(state = listState) {
+//                LazyColumn(state = listState) {
+//                    items(books) { book ->
+//                        Text(text = book.title, fontWeight = FontWeight.Bold)
+//                        // You can build BookCard composable here for nicer UI
+//                        Spacer(modifier = Modifier.height(10.dp))
+//                    }
+//                }
+                LazyVerticalGrid(state = gridState,
+//                    columns = GridCells.Adaptive(minSize = 140.dp),
+                    columns = GridCells.Fixed(3),
+                    contentPadding = PaddingValues(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     items(books) { book ->
-                        Text(text = book.title, fontWeight = FontWeight.Bold)
-                        // You can build BookCard composable here for nicer UI
-                        Spacer(modifier = Modifier.height(10.dp))
+                        BookCard(book = book)
                     }
                 }
             }
@@ -185,4 +213,48 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
 fun PreviewBookListScreen(){
     BookList(rememberNavController())
 
+}
+
+@Composable
+fun BookCard(
+    book: Book,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .width(140.dp)
+            .padding(8.dp)
+    ) {
+        AsyncImage(
+            model = book.imageUrl,
+            contentDescription = book.title,
+            modifier = Modifier.padding()
+                .height(150.dp)
+//                .aspectRatio(0.8f) // book cover ratio
+                .clip(RoundedCornerShape(8.dp)
+                    ),
+                    contentScale = ContentScale.Crop,
+
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = book.title.uppercase(),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontWeight = FontWeight.SemiBold
+            ),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
+
+        Text(
+            text = book.authors.firstOrNull()?.name ?: "Unknown",
+            style = MaterialTheme.typography.bodySmall.copy(
+                color = Color.Gray
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
 }
