@@ -1,6 +1,7 @@
 package com.ashish.bookignitesol.Screens
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,237 +39,332 @@ import com.ashish.bookignitesol.R
 /**
  * Created by Ashish Kr on 02,July,2025
  */
+//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@Composable
+//fun BookGenreScreen(navController: NavHostController){
+//    Scaffold {
+//        Column(Modifier.padding(20.dp)) {
+//
+//            Spacer(modifier = Modifier.height(50.dp))
+//
+//            Text("Gutenberg \nProject",
+////                style = MaterialTheme.typography.titleLarge,
+//                color = ThemeColorPrimary,
+//                fontSize = 48.sp,
+//                fontWeight = FontWeight.Bold,
+//                lineHeight = 45.sp
+//            )
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Text("A social cataloging website that allows you to freely search its database of books, annotations" +
+//                    "and reviews.",
+////                style = MaterialTheme.typography.labelMedium,
+//                color = Color.Black,
+//                fontSize = 16.sp
+//            )
+//
+//            Spacer(modifier = Modifier.height(20.dp))
+//
+//
+//            Card(modifier = Modifier.padding(2.dp)
+//                .height(50.dp).clickable{
+//                    navController.navigate(Screen.BookListScreen.withArgs("FICTION"))
+//
+//                }) {
+//                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically) {
+//
+//                    Row(Modifier.fillMaxWidth(0.8f),
+//                        verticalAlignment = Alignment.CenterVertically) {
+////                        Image(painter = painterResource(R.drawable.fiction), contentDescription = "icon", tint = ThemeColorPrimary,
+////                            modifier = Modifier.size(35.dp))
+//                        Image(painter = painterResource(R.drawable.fiction),
+//                            contentDescription = "icon",
+//                            modifier = Modifier.size(35.dp))
+//                        Text("FICTION", modifier = Modifier.padding(start = 20.dp),
+//                            fontWeight = FontWeight.Bold)
+//                    }
+//                    Row {
+//                        Icon(Icons.Default.ArrowForward, "icon",
+//                            tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+//                    }
+//
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Card(modifier = Modifier.padding(2.dp)
+//                .height(50.dp).clickable{
+//                    navController.navigate(Screen.BookListScreen.withArgs("DRAMA"))
+//
+//                }) {
+//                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically) {
+//
+//                    Row(Modifier.fillMaxWidth(0.8f),
+//                        verticalAlignment = Alignment.CenterVertically) {
+////                        Icon(painter = painterResource(R.drawable.drama), contentDescription = "icon", tint = ThemeColorPrimary,
+////                            modifier = Modifier.size(35.dp))
+//                        Image(painter = painterResource(R.drawable.drama),
+//                            contentDescription = "icon",
+//                            modifier = Modifier.size(35.dp))
+//                        Text("DRAMA", modifier = Modifier.padding(start = 20.dp),
+//                            fontWeight = FontWeight.Bold)
+//                    }
+//                    Row {
+//                        Icon(Icons.Default.ArrowForward, "icon",
+//                            tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+//                    }
+//
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Card(modifier = Modifier.padding(2.dp)
+//                .height(50.dp).clickable{
+//                    navController.navigate(Screen.BookListScreen.withArgs("HUMOR"))
+//
+//                }) {
+//                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically) {
+//
+//                    Row(Modifier.fillMaxWidth(0.8f),
+//                        verticalAlignment = Alignment.CenterVertically) {
+////                        Icon(painter = painterResource(R.drawable.humour), contentDescription = "icon", tint = ThemeColorPrimary,
+////                            modifier = Modifier.size(35.dp))
+//                        Image(painter = painterResource(R.drawable.humour),
+//                            contentDescription = "icon",
+//                            modifier = Modifier.size(35.dp))
+//                        Text("HUMOR", modifier = Modifier.padding(start = 20.dp),
+//                            fontWeight = FontWeight.Bold)
+//                    }
+//                    Row {
+//                        Icon(Icons.Default.ArrowForward, "icon",
+//                            tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+//                    }
+//
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Card(modifier = Modifier.padding(2.dp)
+//                .height(50.dp).clickable{
+//                    navController.navigate(Screen.BookListScreen.withArgs("POLITICS"))
+//
+//                }) {
+//                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically) {
+//
+//                    Row(Modifier.fillMaxWidth(0.8f),
+//                        verticalAlignment = Alignment.CenterVertically) {
+////                        Icon(painter = painterResource(R.drawable.politics), contentDescription = "icon", tint = ThemeColorPrimary,
+////                            modifier = Modifier.size(35.dp))
+//                        Image(painter = painterResource(R.drawable.politics),
+//                            contentDescription = "icon",
+//                            modifier = Modifier.size(35.dp))
+//                        Text("POLITICS", modifier = Modifier.padding(start = 20.dp),
+//                            fontWeight = FontWeight.Bold)
+//                    }
+//                    Row {
+//                        Icon(Icons.Default.ArrowForward, "icon",
+//                            tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+//                    }
+//
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Card(modifier = Modifier.padding(2.dp)
+//                .height(50.dp).clickable{
+//                    navController.navigate(Screen.BookListScreen.withArgs("PHILOSOPHY"))
+//
+//                }) {
+//                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically) {
+//
+//                    Row(Modifier.fillMaxWidth(0.8f),
+//                        verticalAlignment = Alignment.CenterVertically) {
+////                        Icon(painter = painterResource(R.drawable.philosophy), contentDescription = "icon", tint = ThemeColorPrimary,
+////                            modifier = Modifier.size(35.dp))
+//                        Image(painter = painterResource(R.drawable.philosophy),
+//                            contentDescription = "icon",
+//                            modifier = Modifier.size(35.dp))
+//                        Text("PHILOSOPHY", modifier = Modifier.padding(start = 20.dp),
+//                            fontWeight = FontWeight.Bold)
+//                    }
+//                    Row {
+//                        Icon(Icons.Default.ArrowForward, "icon",
+//                            tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+//                    }
+//
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Card(modifier = Modifier.padding(2.dp)
+//                .height(50.dp).clickable{
+//                    navController.navigate(Screen.BookListScreen.withArgs("HISTORY"))
+//
+//                }) {
+//                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically) {
+//
+//                    Row(Modifier.fillMaxWidth(0.8f),
+//                        verticalAlignment = Alignment.CenterVertically) {
+////                        Icon(painter = painterResource(R.drawable.history), contentDescription = "icon", tint = ThemeColorPrimary,
+////                            modifier = Modifier.size(35.dp))
+//                        Image(painter = painterResource(R.drawable.history),
+//                            contentDescription = "icon",
+//                            modifier = Modifier.size(35.dp))
+//                        Text("HISTORY", modifier = Modifier.padding(start = 20.dp),
+//                            fontWeight = FontWeight.Bold)
+//                    }
+//                    Row {
+//                        Icon(Icons.Default.ArrowForward, "icon",
+//                            tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+//                    }
+//
+//                }
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Card(modifier = Modifier.padding(2.dp)
+//                .height(50.dp).clickable{
+//                    navController.navigate(Screen.BookListScreen.withArgs("ADVENTURE"))
+//
+//                }) {
+//                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically) {
+//
+//                    Row(Modifier.fillMaxWidth(0.8f),
+//                        verticalAlignment = Alignment.CenterVertically) {
+////                        Icon(painter = painterResource(R.drawable.adventure), contentDescription = "icon", tint = ThemeColorPrimary,
+////                            modifier = Modifier.size(35.dp))
+//                        Image(painter = painterResource(R.drawable.adventure),
+//                            contentDescription = "icon",
+//                            modifier = Modifier.size(35.dp))
+//                        Text("ADVENTURE", modifier = Modifier.padding(start = 20.dp),
+//                            fontWeight = FontWeight.Bold)
+//                    }
+//                    Row {
+//                        Icon(Icons.Default.ArrowForward, "icon",
+//                            tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
+//}
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BookGenreScreen(navController: NavHostController){
+fun BookGenreScreen(navController: NavHostController) {
+
+    val genres = listOf(
+        Genre("FICTION", R.drawable.fiction),
+        Genre("DRAMA", R.drawable.drama),
+        Genre("HUMOR", R.drawable.humour),
+        Genre("POLITICS", R.drawable.politics),
+        Genre("PHILOSOPHY", R.drawable.philosophy),
+        Genre("HISTORY", R.drawable.history),
+        Genre("ADVENTURE", R.drawable.adventure)
+    )
+
     Scaffold {
         Column(Modifier.padding(20.dp)) {
 
             Spacer(modifier = Modifier.height(50.dp))
 
-            Text("Gutenberg \nProject",
-//                style = MaterialTheme.typography.titleLarge,
+            Text(
+                "Gutenberg \nProject",
                 color = ThemeColorPrimary,
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold,
                 lineHeight = 45.sp
             )
+
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text("A social cataloging website that allows you to freely search its database of books, annotations" +
-                    "and reviews.",
-//                style = MaterialTheme.typography.labelMedium,
+            Text(
+                "A social cataloging website that allows you to freely search its database of books, annotations and reviews.",
                 color = Color.Black,
                 fontSize = 16.sp
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp).clickable{
-                    navController.navigate(Screen.BookListScreen.withArgs("FICTION"))
-
-                }) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-//                        Image(painter = painterResource(R.drawable.fiction), contentDescription = "icon", tint = ThemeColorPrimary,
-//                            modifier = Modifier.size(35.dp))
-                        Image(painter = painterResource(R.drawable.fiction),
-                            contentDescription = "icon",
-                            modifier = Modifier.size(35.dp))
-                        Text("FICTION", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
+            genres.forEach { genre ->
+                GenreCard(genre = genre) {
+                    navController.navigate(Screen.BookListScreen.withArgs(genre.name))
                 }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp).clickable{
-                    navController.navigate(Screen.BookListScreen.withArgs("DRAMA"))
-
-                }) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-//                        Icon(painter = painterResource(R.drawable.drama), contentDescription = "icon", tint = ThemeColorPrimary,
-//                            modifier = Modifier.size(35.dp))
-                        Image(painter = painterResource(R.drawable.drama),
-                            contentDescription = "icon",
-                            modifier = Modifier.size(35.dp))
-                        Text("DRAMA", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp).clickable{
-                    navController.navigate(Screen.BookListScreen.withArgs("HUMOR"))
-
-                }) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-//                        Icon(painter = painterResource(R.drawable.humour), contentDescription = "icon", tint = ThemeColorPrimary,
-//                            modifier = Modifier.size(35.dp))
-                        Image(painter = painterResource(R.drawable.humour),
-                            contentDescription = "icon",
-                            modifier = Modifier.size(35.dp))
-                        Text("HUMOR", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp).clickable{
-                    navController.navigate(Screen.BookListScreen.withArgs("POLITICS"))
-
-                }) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-//                        Icon(painter = painterResource(R.drawable.politics), contentDescription = "icon", tint = ThemeColorPrimary,
-//                            modifier = Modifier.size(35.dp))
-                        Image(painter = painterResource(R.drawable.politics),
-                            contentDescription = "icon",
-                            modifier = Modifier.size(35.dp))
-                        Text("POLITICS", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp).clickable{
-                    navController.navigate(Screen.BookListScreen.withArgs("PHILOSOPHY"))
-
-                }) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-//                        Icon(painter = painterResource(R.drawable.philosophy), contentDescription = "icon", tint = ThemeColorPrimary,
-//                            modifier = Modifier.size(35.dp))
-                        Image(painter = painterResource(R.drawable.philosophy),
-                            contentDescription = "icon",
-                            modifier = Modifier.size(35.dp))
-                        Text("PHILOSOPHY", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp).clickable{
-                    navController.navigate(Screen.BookListScreen.withArgs("HISTORY"))
-
-                }) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-//                        Icon(painter = painterResource(R.drawable.history), contentDescription = "icon", tint = ThemeColorPrimary,
-//                            modifier = Modifier.size(35.dp))
-                        Image(painter = painterResource(R.drawable.history),
-                            contentDescription = "icon",
-                            modifier = Modifier.size(35.dp))
-                        Text("HISTORY", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp).clickable{
-                    navController.navigate(Screen.BookListScreen.withArgs("ADVENTURE"))
-
-                }) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
-
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-//                        Icon(painter = painterResource(R.drawable.adventure), contentDescription = "icon", tint = ThemeColorPrimary,
-//                            modifier = Modifier.size(35.dp))
-                        Image(painter = painterResource(R.drawable.adventure),
-                            contentDescription = "icon",
-                            modifier = Modifier.size(35.dp))
-                        Text("ADVENTURE", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
-                }
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
 }
+data class Genre(
+    val name: String,
+    @DrawableRes val iconRes: Int
+)
+
+@Composable
+fun GenreCard(genre: Genre, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .padding(2.dp)
+            .height(50.dp)
+            .fillMaxWidth()
+            .clickable { onClick() }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                Modifier.fillMaxWidth(0.8f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(genre.iconRes),
+                    contentDescription = "${genre.name} icon",
+                    modifier = Modifier.size(35.dp)
+                )
+                Text(
+                    text = genre.name,
+                    modifier = Modifier.padding(start = 20.dp),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = "arrow",
+                tint = ThemeColorPrimary,
+                modifier = Modifier.size(35.dp)
+            )
+        }
+    }
+}
+
+
 
 @Preview
 @Composable

@@ -63,11 +63,7 @@ fun BookList(navController: NavHostController, genre: String = "Fiction"){
 
 
     LaunchedEffect(Unit) {
-//        if(!selectedCurrentLevel.isNullOrEmpty()){
-//            viewmodel.getLevelByIndexId(levelIndex.toInt())
-//            viewmodel.checkNextLevelOpen(levelIndex.toInt())
-//        }
-//
+
 
     }
 
