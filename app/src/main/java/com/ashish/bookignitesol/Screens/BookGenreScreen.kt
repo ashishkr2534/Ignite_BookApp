@@ -1,6 +1,7 @@
 package com.ashish.bookignitesol.Screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,6 +33,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.ashish.bookignitesol.Navigation.Screen
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
+import com.ashish.bookignitesol.R
 
 /**
  * Created by Ashish Kr on 02,July,2025
@@ -73,7 +76,10 @@ fun BookGenreScreen(navController: NavHostController){
 
                     Row(Modifier.fillMaxWidth(0.8f),
                         verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+//                        Image(painter = painterResource(R.drawable.fiction), contentDescription = "icon", tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+                        Image(painter = painterResource(R.drawable.fiction),
+                            contentDescription = "icon",
                             modifier = Modifier.size(35.dp))
                         Text("FICTION", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
@@ -99,7 +105,10 @@ fun BookGenreScreen(navController: NavHostController){
 
                     Row(Modifier.fillMaxWidth(0.8f),
                         verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+//                        Icon(painter = painterResource(R.drawable.drama), contentDescription = "icon", tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+                        Image(painter = painterResource(R.drawable.drama),
+                            contentDescription = "icon",
                             modifier = Modifier.size(35.dp))
                         Text("DRAMA", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
@@ -125,7 +134,10 @@ fun BookGenreScreen(navController: NavHostController){
 
                     Row(Modifier.fillMaxWidth(0.8f),
                         verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+//                        Icon(painter = painterResource(R.drawable.humour), contentDescription = "icon", tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+                        Image(painter = painterResource(R.drawable.humour),
+                            contentDescription = "icon",
                             modifier = Modifier.size(35.dp))
                         Text("HUMOR", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
@@ -151,7 +163,10 @@ fun BookGenreScreen(navController: NavHostController){
 
                     Row(Modifier.fillMaxWidth(0.8f),
                         verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+//                        Icon(painter = painterResource(R.drawable.politics), contentDescription = "icon", tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+                        Image(painter = painterResource(R.drawable.politics),
+                            contentDescription = "icon",
                             modifier = Modifier.size(35.dp))
                         Text("POLITICS", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
@@ -177,7 +192,10 @@ fun BookGenreScreen(navController: NavHostController){
 
                     Row(Modifier.fillMaxWidth(0.8f),
                         verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+//                        Icon(painter = painterResource(R.drawable.philosophy), contentDescription = "icon", tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+                        Image(painter = painterResource(R.drawable.philosophy),
+                            contentDescription = "icon",
                             modifier = Modifier.size(35.dp))
                         Text("PHILOSOPHY", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
@@ -203,7 +221,10 @@ fun BookGenreScreen(navController: NavHostController){
 
                     Row(Modifier.fillMaxWidth(0.8f),
                         verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+//                        Icon(painter = painterResource(R.drawable.history), contentDescription = "icon", tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+                        Image(painter = painterResource(R.drawable.history),
+                            contentDescription = "icon",
                             modifier = Modifier.size(35.dp))
                         Text("HISTORY", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
@@ -229,7 +250,10 @@ fun BookGenreScreen(navController: NavHostController){
 
                     Row(Modifier.fillMaxWidth(0.8f),
                         verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+//                        Icon(painter = painterResource(R.drawable.adventure), contentDescription = "icon", tint = ThemeColorPrimary,
+//                            modifier = Modifier.size(35.dp))
+                        Image(painter = painterResource(R.drawable.adventure),
+                            contentDescription = "icon",
                             modifier = Modifier.size(35.dp))
                         Text("ADVENTURE", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
