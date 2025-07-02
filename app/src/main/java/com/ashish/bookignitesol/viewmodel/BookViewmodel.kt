@@ -88,21 +88,40 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
         _searchQuery.value = query
     }
 
+//    init {
+//        viewModelScope.launch {
+//            _searchQuery
+//                .debounce(400) // 400ms delay to debounce
+//                .distinctUntilChanged()
+//                .collectLatest { query ->
+//                    if (query.isNotBlank()) {
+//                        _isSearching.emit(true)
+//                        _isLoading.emit(true)
+//                        val encoded = Uri.encode(query)
+//                        val result = repo.searchBookinGenre(encoded)
+//                        _books.emit(result)
+//                        _isLoading.emit(false)
+//                    } else {
+//                        // Reset list when query is cleared
+//                        clearSearchAndReloadGenre(currentGenre)
+//                    }
+//                }
+//        }
+//    }
+
     init {
         viewModelScope.launch {
             _searchQuery
-                .debounce(400) // 400ms delay to debounce
+                .debounce(400)
                 .distinctUntilChanged()
                 .collectLatest { query ->
                     if (query.isNotBlank()) {
                         _isSearching.emit(true)
                         _isLoading.emit(true)
-                        val encoded = Uri.encode(query)
-                        val result = repo.getBooksSearch(encoded)
+                        val result = repo.searchBooksInGenre(currentGenre, query)
                         _books.emit(result)
                         _isLoading.emit(false)
                     } else {
-                        // Reset list when query is cleared
                         clearSearchAndReloadGenre(currentGenre)
                     }
                 }
@@ -149,14 +168,12 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
         }
     }
 
-    fun searchBooksAcrossAllGenres(query: String) {
+    fun searchBooksInGenres(query: String) {
         if (query.isBlank()) return
 
         viewModelScope.launch {
             _isLoading.emit(true)
-            isSearchMode = true
-            val encodedQuery = Uri.encode(query.trim())
-            val result = repo.getBooksSearch(encodedQuery) // <- Search across ALL categories
+            val result = repo.searchBooksInGenre(currentGenre, query)
             _books.emit(result)
             _isLoading.emit(false)
         }

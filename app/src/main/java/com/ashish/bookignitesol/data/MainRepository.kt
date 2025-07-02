@@ -20,17 +20,17 @@ class BookRepository @Inject constructor(private val api: BookApi) {
         }
     }
 
-    suspend fun getBooksSearch(genre: String): List<Book> {
-        return try {
-//            val response = api.getBooks()
-            val response = api.getBooksSearch(genre = genre, mimeType = "image/")
-            Log.d("ResultBooks Search", response.results.toString())
-            response.results
-        } catch (e: Exception) {
-            Log.e("BookRepository", "Error fetching books", e)
-            emptyList()
-        }
-    }
+//    suspend fun getBooksSearch(genre: String): List<Book> {
+//        return try {
+////            val response = api.getBooks()
+//            val response = api.getBooksSearch(genre = genre, mimeType = "image/")
+//            Log.d("ResultBooks Search", response.results.toString())
+//            response.results
+//        } catch (e: Exception) {
+//            Log.e("BookRepository", "Error fetching books", e)
+//            emptyList()
+//        }
+//    }
 
 suspend fun getBooksByGenre(genre: String, page: Int): List<Book> {
     return try {
@@ -42,4 +42,18 @@ suspend fun getBooksByGenre(genre: String, page: Int): List<Book> {
         emptyList()
     }
 }
+
+    suspend fun searchBooksInGenre(genre: String, query: String): List<Book> {
+        return try {
+            val allBooks = api.getBooksByTopicAndMime(topic = genre.lowercase(), page = 1).results
+            allBooks.filter {
+                it.title.contains(query, ignoreCase = true) ||
+                        it.authors.any { author -> author.name.contains(query, ignoreCase = true) }
+            }
+        } catch (e: Exception) {
+            Log.e("BookRepository", "Error searching books in genre", e)
+            emptyList()
+        }
+    }
+
 }

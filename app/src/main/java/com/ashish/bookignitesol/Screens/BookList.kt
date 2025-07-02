@@ -169,7 +169,7 @@ fun BookList(
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(onSearch = {
                     keyboardController?.hide()
-                    viewModel.searchBooksAcrossAllGenres(searchQuery)
+                    viewModel.searchBooksInGenres(searchQuery)
                 }),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
