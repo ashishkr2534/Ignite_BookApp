@@ -1,6 +1,6 @@
 # 📚 Ignite Book App - Gutenberg Book Browser
 
-An Android app built using **Jetpack Compose** that allows users to browse and open books from the [Project Gutenberg](https://www.gutenberg.org/) public domain library.
+An Android app built using **Jetpack Compose** that allows users to browse and open books from the [Project Gutenberg](https://www.gutenberg.org/) public domain library. (Screenshot Attached Below)
 
 ## 🔧 Tech Stack
 
