@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Book IgniteSol</string>
+    <string name="bookGenre_screen">bookGenre_screen</string>
+    <string name="bookList_screen">bookList_screen</string>
 </resources>

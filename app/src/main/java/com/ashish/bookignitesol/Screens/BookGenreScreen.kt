@@ -1,6 +1,7 @@
 package com.ashish.bookignitesol.Screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.packInts
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.ashish.bookignitesol.Navigation.Screen
 import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
 
 /**
@@ -33,17 +37,18 @@ import com.ashish.bookignitesol.ui.theme.ThemeColorPrimary
  */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BookGenreScreen(){
+fun BookGenreScreen(navController: NavHostController){
     Scaffold {
         Column(Modifier.padding(20.dp)) {
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
-            Text("Gutenberg \n Project",
+            Text("Gutenberg \nProject",
 //                style = MaterialTheme.typography.titleLarge,
                 color = ThemeColorPrimary,
                 fontSize = 48.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                lineHeight = 45.sp
             )
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -58,7 +63,10 @@ fun BookGenreScreen(){
 
 
             Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp)) {
+                .height(50.dp).clickable{
+                    navController.navigate(Screen.BookListScreen.withArgs("FICTION"))
+
+                }) {
                 Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically) {
@@ -81,7 +89,10 @@ fun BookGenreScreen(){
             Spacer(modifier = Modifier.height(10.dp))
 
             Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp)) {
+                .height(50.dp).clickable{
+                    navController.navigate(Screen.BookListScreen.withArgs("DRAMA"))
+
+                }) {
                 Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically) {
@@ -90,7 +101,7 @@ fun BookGenreScreen(){
                         verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
                             modifier = Modifier.size(35.dp))
-                        Text("HORROR", modifier = Modifier.padding(start = 20.dp),
+                        Text("DRAMA", modifier = Modifier.padding(start = 20.dp),
                             fontWeight = FontWeight.Bold)
                     }
                     Row {
@@ -104,30 +115,10 @@ fun BookGenreScreen(){
             Spacer(modifier = Modifier.height(10.dp))
 
             Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp)) {
-                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically) {
+                .height(50.dp).clickable{
+                    navController.navigate(Screen.BookListScreen.withArgs("HUMOR"))
 
-                    Row(Modifier.fillMaxWidth(0.8f),
-                        verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                        Text("ADVENTURE", modifier = Modifier.padding(start = 20.dp),
-                            fontWeight = FontWeight.Bold)
-                    }
-                    Row {
-                        Icon(Icons.Default.ArrowForward, "icon",
-                            tint = ThemeColorPrimary,
-                            modifier = Modifier.size(35.dp))
-                    }
-
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp)) {
+                }) {
                 Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically) {
@@ -150,7 +141,36 @@ fun BookGenreScreen(){
             Spacer(modifier = Modifier.height(10.dp))
 
             Card(modifier = Modifier.padding(2.dp)
-                .height(50.dp)) {
+                .height(50.dp).clickable{
+                    navController.navigate(Screen.BookListScreen.withArgs("POLITICS"))
+
+                }) {
+                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically) {
+
+                    Row(Modifier.fillMaxWidth(0.8f),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+                            modifier = Modifier.size(35.dp))
+                        Text("POLITICS", modifier = Modifier.padding(start = 20.dp),
+                            fontWeight = FontWeight.Bold)
+                    }
+                    Row {
+                        Icon(Icons.Default.ArrowForward, "icon",
+                            tint = ThemeColorPrimary,
+                            modifier = Modifier.size(35.dp))
+                    }
+
+                }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Card(modifier = Modifier.padding(2.dp)
+                .height(50.dp).clickable{
+                    navController.navigate(Screen.BookListScreen.withArgs("PHILOSOPHY"))
+
+                }) {
                 Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically) {
@@ -170,6 +190,58 @@ fun BookGenreScreen(){
 
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Card(modifier = Modifier.padding(2.dp)
+                .height(50.dp).clickable{
+                    navController.navigate(Screen.BookListScreen.withArgs("HISTORY"))
+
+                }) {
+                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically) {
+
+                    Row(Modifier.fillMaxWidth(0.8f),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+                            modifier = Modifier.size(35.dp))
+                        Text("HISTORY", modifier = Modifier.padding(start = 20.dp),
+                            fontWeight = FontWeight.Bold)
+                    }
+                    Row {
+                        Icon(Icons.Default.ArrowForward, "icon",
+                            tint = ThemeColorPrimary,
+                            modifier = Modifier.size(35.dp))
+                    }
+
+                }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Card(modifier = Modifier.padding(2.dp)
+                .height(50.dp).clickable{
+                    navController.navigate(Screen.BookListScreen.withArgs("ADVENTURE"))
+
+                }) {
+                Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically) {
+
+                    Row(Modifier.fillMaxWidth(0.8f),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Default.AccountBox, "icon", tint = ThemeColorPrimary,
+                            modifier = Modifier.size(35.dp))
+                        Text("ADVENTURE", modifier = Modifier.padding(start = 20.dp),
+                            fontWeight = FontWeight.Bold)
+                    }
+                    Row {
+                        Icon(Icons.Default.ArrowForward, "icon",
+                            tint = ThemeColorPrimary,
+                            modifier = Modifier.size(35.dp))
+                    }
+
+                }
+            }
         }
     }
 }
@@ -177,6 +249,6 @@ fun BookGenreScreen(){
 @Preview
 @Composable
 fun PreviewBookGenreScreen(){
-    BookGenreScreen()
+    BookGenreScreen(rememberNavController())
 
 }
