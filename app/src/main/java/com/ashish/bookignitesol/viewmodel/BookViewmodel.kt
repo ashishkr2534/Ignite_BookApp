@@ -28,8 +28,9 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
     fun loadBooks(genre: String) {
         viewModelScope.launch {
             _isLoading.value = true
-            val result = repo.getBooksByGenre(genre)
-            Log.d("BooksViewModel", "Loaded ${result.firstOrNull()?.title ?: "Nothing Found"} books")
+//            val result = repo.getBooksByGenre(genre)
+            val result = repo.getBooks()
+            Log.d("BooksViewModel", "Loaded ${result.toString()} books")
             _books.value = result
             _isLoading.value = false
         }
