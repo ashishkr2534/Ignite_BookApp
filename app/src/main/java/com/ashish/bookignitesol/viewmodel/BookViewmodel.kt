@@ -14,18 +14,63 @@ import javax.inject.Inject
 /**
  * Created by Ashish Kr on 02,July,2025
  */
-//class WordLevelViewmodel @Inject constructor(
-//    private val wordLevelDao: WordLevelDao
-//) : ViewModel() {
+
+//@HiltViewModel
+//class BooksViewModel @Inject constructor(private val repo: BookRepository) : ViewModel() {
+//    private val _books = MutableStateFlow<List<Book>>(emptyList())
+//    val books: StateFlow<List<Book>> = _books
+//
+//    private val _isLoading = MutableStateFlow(false)
+//    val isLoading: StateFlow<Boolean> = _isLoading
+//
+//    fun loadBooks(genre: String) {
+//        viewModelScope.launch {
+//            _isLoading.value = true
+////            val result = repo.getBooksByGenre(genre)
+//            val result = repo.getBooks()
+//            Log.d("BooksViewModel", "Loaded ${result.toString()} books")
+//            _books.value = result
+//            _isLoading.value = false
+//        }
+//    }
+//
+//    fun loadBooksSearch(genre: String) {
+//        viewModelScope.launch {
+//            _isLoading.value = true
+//            val result = repo.getBooksSearch(genre)
+////            val result = repo.getBooks()
+//            Log.d("BooksViewModel Search", "Loaded ${result.toString()} books")
+//            _books.value = result
+//            _isLoading.value = false
+//        }
+//    }
+//
+//    fun loadBooksByGenre(genre: String) {
+//        viewModelScope.launch {
+//            _isLoading.value = true
+//            val result = repo.getBooksByGenre(genre)
+//            Log.d("BooksViewModel", "Loaded ${result.size} books for $genre")
+//            _books.value = result
+//            _isLoading.value = false
+//        }
+//    }
+//}
+
 @HiltViewModel
 class BooksViewModel @Inject constructor(private val repo: BookRepository) : ViewModel() {
+
     private val _books = MutableStateFlow<List<Book>>(emptyList())
     val books: StateFlow<List<Book>> = _books
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    fun loadBooks(genre: String) {
+    private var currentPage = 1
+    private var endReached = false
+
+    private var currentGenre = ""
+
+        fun loadBooks(genre: String) {
         viewModelScope.launch {
             _isLoading.value = true
 //            val result = repo.getBooksByGenre(genre)
@@ -47,12 +92,28 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
         }
     }
 
-    fun loadBooksByGenre(genre: String) {
+    fun loadBooksByGenre(genre: String, loadNextPage: Boolean = false) {
+        if (_isLoading.value || endReached) return
+
         viewModelScope.launch {
             _isLoading.value = true
-            val result = repo.getBooksByGenre(genre)
-            Log.d("BooksViewModel", "Loaded ${result.size} books for $genre")
-            _books.value = result
+
+            // Set genre only once
+            if (!loadNextPage) {
+                currentGenre = genre
+                currentPage = 1
+                _books.value = emptyList()
+                endReached = false
+            }
+
+            val result = repo.getBooksByGenre(currentGenre, currentPage)
+            if (result.isNotEmpty()) {
+                _books.value = _books.value + result
+                currentPage++
+            } else {
+                endReached = true
+            }
+
             _isLoading.value = false
         }
     }

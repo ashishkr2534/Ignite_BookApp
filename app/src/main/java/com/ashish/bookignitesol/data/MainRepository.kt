@@ -43,14 +43,24 @@ class BookRepository @Inject constructor(private val api: BookApi) {
             emptyList()
         }
     }
-    suspend fun getBooksByGenre(genre: String): List<Book> {
-        return try {
-            val response = api.getBooksByTopicAndMime(topic = genre.lowercase())
-            Log.d("ResultBooks", response.results.toString())
-            response.results
-        } catch (e: Exception) {
-            Log.e("BookRepository", "Error fetching books by genre", e)
-            emptyList()
-        }
+//    suspend fun getBooksByGenre(genre: String): List<Book> {
+//        return try {
+//            val response = api.getBooksByTopicAndMime(topic = genre.lowercase())
+//            Log.d("ResultBooks", response.results.toString())
+//            response.results
+//        } catch (e: Exception) {
+//            Log.e("BookRepository", "Error fetching books by genre", e)
+//            emptyList()
+//        }
+//    }
+suspend fun getBooksByGenre(genre: String, page: Int): List<Book> {
+    return try {
+        val response = api.getBooksByTopicAndMime(topic = genre.lowercase(), page = page)
+        Log.d("PageResult", "Page $page: ${response.results.size} books")
+        response.results
+    } catch (e: Exception) {
+        Log.e("BookRepository", "Error loading page $page", e)
+        emptyList()
     }
+}
 }

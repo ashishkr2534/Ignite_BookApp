@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -42,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -83,9 +86,21 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
     val books by viewModel.books.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
+    val listState = rememberLazyListState()
+
     LaunchedEffect(Unit) {
         viewModel.loadBooksByGenre(genre)
 
+    }
+
+    // Detect scroll to end
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
+            .collect { lastVisibleIndex ->
+                if (lastVisibleIndex == books.size - 1 && !isLoading) {
+                    viewModel.loadBooksByGenre(genre, loadNextPage = true)
+                }
+            }
     }
 
     Scaffold(topBar ={
@@ -143,9 +158,14 @@ fun BookList(navController: NavHostController, genre: String = "Fiction",
             )
 
             if (isLoading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                )
             } else {
-                LazyColumn {
+                LazyColumn(state = listState) {
                     items(books) { book ->
                         Text(text = book.title, fontWeight = FontWeight.Bold)
                         // You can build BookCard composable here for nicer UI
