@@ -5,6 +5,10 @@ package com.ashish.bookignitesol.Screens
  */
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -61,6 +65,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.font.FontWeight
@@ -203,27 +208,99 @@ fun BookList(
 }
 
 
+//@Composable
+//fun BookCard(
+//    book: Book,
+//    modifier: Modifier = Modifier
+//) {
+//    Column(
+//        modifier = modifier
+//            .width(140.dp)
+//            .padding(8.dp)
+//    ) {
+//        AsyncImage(
+//            model = book.imageUrl,
+//            contentDescription = book.title,
+//            modifier = Modifier.padding()
+//                .height(150.dp)
+////                .aspectRatio(0.8f) // book cover ratio
+//                .clip(RoundedCornerShape(8.dp)
+//                    ),
+//                    contentScale = ContentScale.Crop,
+//
+//        )
+//
+//        Spacer(modifier = Modifier.height(8.dp))
+//
+//        Text(
+//            text = book.title.uppercase(),
+//            style = MaterialTheme.typography.bodyMedium.copy(
+//                fontWeight = FontWeight.SemiBold
+//            ),
+//            maxLines = 2,
+//            overflow = TextOverflow.Ellipsis
+//        )
+//
+//        Text(
+//            text = book.authors.firstOrNull()?.name ?: "Unknown",
+//            style = MaterialTheme.typography.bodySmall.copy(
+//                color = Color.Gray
+//            ),
+//            maxLines = 1,
+//            overflow = TextOverflow.Ellipsis
+//        )
+//    }
+//}
+
+@Preview
 @Composable
-fun BookCard(
-    book: Book,
-    modifier: Modifier = Modifier
-) {
+fun PreviewBookListScreen(){
+    BookList(rememberNavController())
+
+}
+
+@Composable
+fun BookCard(book: Book, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .width(140.dp)
             .padding(8.dp)
-    ) {
-        AsyncImage(
-            model = book.imageUrl,
-            contentDescription = book.title,
-            modifier = Modifier.padding()
-                .height(150.dp)
-//                .aspectRatio(0.8f) // book cover ratio
-                .clip(RoundedCornerShape(8.dp)
-                    ),
-                    contentScale = ContentScale.Crop,
+            .clickable {
+                val preferredMimeTypes = listOf(
+                    "text/html",
+                    "application/pdf",
+                    "text/plain"
+                )
 
-        )
+                val viewableUrl = preferredMimeTypes.firstNotNullOfOrNull { mime ->
+                    val url = book.formats[mime]
+                    if (url != null && !url.endsWith(".zip", ignoreCase = true)) url else null
+                }
+
+                if (viewableUrl != null) {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(viewableUrl))
+                    context.startActivity(intent)
+                } else {
+                    AlertDialog.Builder(context)
+                        .setTitle("Error")
+                        .setMessage("No viewable version available")
+                        .setPositiveButton("OK", null)
+                        .show()
+                }
+            }
+    ) {
+        if (book.imageUrl != null) {
+            AsyncImage(
+                model = book.imageUrl,
+                contentDescription = book.title,
+                modifier = Modifier
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -238,18 +315,9 @@ fun BookCard(
 
         Text(
             text = book.authors.firstOrNull()?.name ?: "Unknown",
-            style = MaterialTheme.typography.bodySmall.copy(
-                color = Color.Gray
-            ),
+            style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
     }
-}
-
-@Preview
-@Composable
-fun PreviewBookListScreen(){
-    BookList(rememberNavController())
-
 }

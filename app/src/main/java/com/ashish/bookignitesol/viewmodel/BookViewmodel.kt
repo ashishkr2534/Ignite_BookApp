@@ -88,26 +88,6 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
         _searchQuery.value = query
     }
 
-//    init {
-//        viewModelScope.launch {
-//            _searchQuery
-//                .debounce(400) // 400ms delay to debounce
-//                .distinctUntilChanged()
-//                .collectLatest { query ->
-//                    if (query.isNotBlank()) {
-//                        _isSearching.emit(true)
-//                        _isLoading.emit(true)
-//                        val encoded = Uri.encode(query)
-//                        val result = repo.searchBookinGenre(encoded)
-//                        _books.emit(result)
-//                        _isLoading.emit(false)
-//                    } else {
-//                        // Reset list when query is cleared
-//                        clearSearchAndReloadGenre(currentGenre)
-//                    }
-//                }
-//        }
-//    }
 
     init {
         viewModelScope.launch {
@@ -182,6 +162,7 @@ class BooksViewModel @Inject constructor(private val repo: BookRepository) : Vie
     fun clearSearchAndReloadGenre(genre: String) {
         viewModelScope.launch {
             isSearchMode = false
+            _searchQuery.value = ""
             _books.emit(emptyList())
             loadBooksByGenre(genre)
         }
