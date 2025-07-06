@@ -65,12 +65,16 @@ When a book is tapped, the app will:
 
 ## ✨ Screenshots (Ignite Book App)
 Include UI screenshots here once ready.
-![image](https://github.com/user-attachments/assets/95bc50a0-5a2a-42bb-845b-43ab2674fa7b)
+<div style="display: flex; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/95bc50a0-5a2a-42bb-845b-43ab2674fa7b" alt="Glassified UI 1" width="250"/>
+  <img src="https://github.com/user-attachments/assets/9b0359ab-1209-413e-a267-969ea51e33b9" alt="Glassified UI 2" width="250"/>
+     
+</div>
 
-![image](https://github.com/user-attachments/assets/9b0359ab-1209-413e-a267-969ea51e33b9)
 
 ---
 
 ## 👨‍💻 Developed by
 Ashish – Android Developer  
+Linkedin - https://www.linkedin.com/in/ashishkr2534
 Tech Focus: Jetpack Compose, Kotlin , Swift UI , System Architecture
