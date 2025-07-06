@@ -74,7 +74,7 @@ Include UI screenshots here once ready.
 
 ---
 
-## 👨‍💻 Developed by
+## 👨‍💻 Developed by  
 Ashish – Android Developer  
-Linkedin - https://www.linkedin.com/in/ashishkr2534
-Tech Focus: Jetpack Compose, Kotlin , Swift UI , System Architecture
+[LinkedIn – ashishkr2534](https://www.linkedin.com/in/ashishkr2534)  
+Tech Focus: Jetpack Compose, Kotlin, SwiftUI, System Architecture
